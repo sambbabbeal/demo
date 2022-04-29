@@ -1,0 +1,33 @@
+// MongoDB Playground
+// To disable this template go to Settings | MongoDB | Use Default Template For Playground.
+// Make sure you are connected to enable completions and to be able to run a playground.
+// Use Ctrl+Space inside a snippet or a string literal to trigger completions.
+
+// Select the database to use.
+//use('mongodbVSCodePlaygroundDB');
+use('testdb');
+
+// The drop() command destroys all data from a collection.
+// Make sure you run it against the correct database and collection.
+db.customers.drop();
+
+// Insert a few documents into the sales collection.
+db.customers.insertMany([
+  { '_id': 1, 'name': 'abc'  },
+  { '_id': 2, 'name': 'jkl'  },
+  { '_id': 3, 'name': 'abc' },
+]);
+
+// Run a find command to view items sold on April 4th, 2014.
+db.customers.find({'_id': 1} );
+
+// Build an aggregation to view total sales for each product in 2014.
+const aggregation = [
+  { $match: { date: { $gte: new Date('2014-01-01'), $lt: new Date('2015-01-01') } } },
+  { $group: { _id: '$item', totalSaleAmount: { $sum: { $multiply: [ '$price', '$quantity' ] } } } }
+];
+
+// Run the aggregation and open a cursor to the results.
+// Use toArray() to exhaust the cursor to return the whole result set.
+// You can use hasNext()/next() to iterate through the cursor page by page.
+db.sales.aggregate(aggregation);
