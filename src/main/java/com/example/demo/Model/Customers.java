@@ -1,6 +1,5 @@
 package com.example.demo.Model;
 
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -9,21 +8,27 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class Customers {
 
     @Id
-    public Integer _id;
+    public Integer id;
     @Field
     private String name;
 
-    public Customers(Integer _id, String name) {
-        this._id = _id;
+    public Customers(Integer id, String name) {
+        this.id = id;
         this.name = name;
     }
 
-    public String getId() {
-        return _id.toString();
+    /*
+     * public String getId() {
+     * return _id.toString();
+     * }
+     */
+
+    public Integer getId() {
+        return id;
     }
 
-    public void setId(Integer _id) {
-        this._id = _id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
