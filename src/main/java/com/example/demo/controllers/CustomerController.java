@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -38,7 +39,6 @@ public class CustomerController {
     public Mono<ResponseEntity<Customers>> get(@PathVariable(value = "id") Integer id) {
         Mono<Customers> user = repository.findById(id);
 
-        System.out.println("hey" + id + user);
         return user.map(u -> ResponseEntity.ok(u))
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
@@ -48,15 +48,16 @@ public class CustomerController {
         return repository.findAll();
     }
 
+
     @PutMapping(value = "/{id}", produces = "application/json")
-    public Mono<Customers> update(@PathVariable("id") Integer id, @RequestBody Customers customer) {
+    public Mono<Customers> update(@PathVariable("id") Integer id, @ModelAttribute Customers customer) {
         repository.save(customer);
         return Mono.just(customer);
     }
 
     @DeleteMapping(value = "/{id}", produces = "application/json")
-    public Mono<Customers> delete(@PathVariable("id") Integer id) {
-        return repository.findById(id);
+    public Mono<Void> delete(@PathVariable("id") Integer id) {
+        return repository.deleteById(id);
     }
 
 }

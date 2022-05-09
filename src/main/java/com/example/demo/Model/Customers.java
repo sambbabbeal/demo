@@ -38,4 +38,8 @@ public class Customers {
     public void setName(String name) {
         this.name = name;
     }
+
+    protected void finalize() {
+        System.out.println("One customers has been destroyed.");
+    }
 }
